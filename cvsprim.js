@@ -1,8 +1,12 @@
 class canvasPrimitive {
-    constructor(isFullscreen, canvas) {
+    constructor(isFullscreen, needsBackgroundCleared, canvas) {
         // If fullscreen is enabled or not
         if (isFullscreen) this.fsCanvas = true;
         else this.fsCanvas = false;
+        
+        // If clear background is enabled or not
+        if (needsBackgroundCleared) this.clearCanvas = true;
+        else this.clearCanvas = false;
         
         // If canvas is provided or not
         if (canvas) this.cvs = canvas;
@@ -23,6 +27,7 @@ class canvasPrimitive {
 
     update(callback) {
         // Loop the callback function
+        if (this.clearCanvas) this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
         if (typeof callback == "function") {
             window.requestAnimationFrame(() => {
                 callback();
